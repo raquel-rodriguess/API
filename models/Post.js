@@ -1,5 +1,6 @@
 
 //guarda todos os dados inseridos
+//gerando tabelas
 const db = require("./db");
 
 const Post = db.sequelize.define('Postagens',{
@@ -10,3 +11,5 @@ const Post = db.sequelize.define('Postagens',{
     type:db.Sequelize.TEXT
 },
 })
+module.exports = Post
+ //Post.sync({force: true})

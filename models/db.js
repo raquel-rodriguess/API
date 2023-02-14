@@ -1,6 +1,6 @@
 
 const Sequelize = require('sequelize');
-const sequelize = new Sequelize('test','root','6728',{
+const sequelize = new Sequelize('PostApi','root','0087',{
     host: "localhost",
     dialect:"mysql"
 })

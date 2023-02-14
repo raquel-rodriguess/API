@@ -29,4 +29,3 @@ app.post('/receber',function(req,res){
 app.listen(6728, function(){
     console.log("Servidor 6728 rodando") 
 })
-
