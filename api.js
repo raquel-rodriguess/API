@@ -1,8 +1,8 @@
 const express = require("express");
 const app = express();
-const Sequelize = require('sequelize');
 const handlebars = require("express-handlebars");
 const bodyParser = require("body-parser")
+const Post = require("./models/Post")
 //config
 // template engine
 app.engine( 'handlebars', handlebars.engine ({defaultLayout: 'main'}));
@@ -12,18 +12,31 @@ app.set('view engine', 'handlebars');
 app.use(bodyParser.urlencoded({extended: false}))
 app.use(bodyParser.json())
 
-//conexão com banco de dados mysql
-const sequelize = new Sequelize('test','root','6728',{
-    host: "localhost",
-    dialect:"mysql"
-})
-//rotas
+
+//rotas 
+//pagigina do formulário
 app.get('/cad',function(req,res){
     res.render('formulario')
 })
 //rota para receber dados inseridos no formulário
-app.post('/receber',function(req,res){
-    res.send('texto: ' + req.body.titulo + "  conteudo "  + req.body.conteudo)
+//app.post('/receber',function(req,res){
+   // res.send('texto: ' + req.body.titulo + "  conteudo "  + req.body.conteudo)
+//})
+
+//rota para rederecionar apõs cadastro ocorrido com sucesso
+ app.get("/", function(req,res){
+    res.render("home")
+ })
+
+app.post("/receber", function(req, res){
+    Post.create({
+        titulo: req.body.titulo,
+        conteudo: req.body.conteudo
+    }).then(function(){
+        res.redirect("/")
+    }).catch(function(erro){
+       res.send("Houve um erro: " + erro)
+    })
 })
 
 app.listen(6728, function(){
