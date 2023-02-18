@@ -24,8 +24,15 @@ app.get('/cad',function(req,res){
 //})
 
 //rota para rederecionar apõs cadastro ocorrido com sucesso
- app.get("/", function(req,res){
-    res.render("home")
+ //app.get("/", function(req,res){
+   // res.render("home")
+ //})
+
+ //Exibindo dados da tabela postagem no navegador
+ app.get("/",function(req,res){
+    Post.findAll({order:[["id", "DESC"]]}).then(function (dados) {
+        res.render("home", {dados: dados})
+    })
  })
 
 app.post("/receber", function(req, res){
@@ -37,7 +44,15 @@ app.post("/receber", function(req, res){
     }).catch(function(erro){
        res.send("Houve um erro: " + erro)
     })
-})
+}) 
+//Deletando dados
+ app.get("/deletar/:id", function(req , res){
+    Post.destroy({where: {"id":req.params.id}}).then(function(){
+        res.send("Dado deletado com sucesso!")
+    }).catch(function(erro){
+        res.send("Esse dado não existe!")
+    })
+ })
 
 app.listen(6728, function(){
     console.log("Servidor 6728 rodando") 
